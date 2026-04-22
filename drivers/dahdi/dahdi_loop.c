@@ -57,6 +57,7 @@ static int num_loops=1;
 static int num_taps=1;
 static struct dahdi_loop *dahdi_loop;
 static int debug = 0;
+static unsigned int alarm_sim_type = DAHDI_ALARM_RED | DAHDI_ALARM_LOS;
 
 static struct hrtimer looptimer;
 
@@ -199,7 +200,7 @@ static int dahdi_loop_maint(struct dahdi_span *span, int cmd)
 		if (span->alarms) {
 			span->alarms = 0;
 		} else {
-			span->alarms = DAHDI_ALARM_RED | DAHDI_ALARM_LOS;
+			span->alarms = alarm_sim_type;
 		}
 		dahdi_alarm_notify(span);
 		break;
@@ -397,6 +398,8 @@ void cleanup_module(void)
 module_param(debug, int, 0600);
 module_param(num_loops, int, 0600);
 module_param(num_taps, int, 0600);
+module_param(alarm_sim_type, uint, 0600);
+MODULE_PARM_DESC(alarm_sim_type, "Alarm flags to set when simulating an alarm (default: DAHDI_ALARM_RED|DAHDI_ALARM_LOS=0x9). Use 0x4 for DAHDI_ALARM_YELLOW.");
 
 MODULE_DESCRIPTION("Loopback DAHDI Driver");
 MODULE_AUTHOR("Druid Software Ltd (liamk)");
