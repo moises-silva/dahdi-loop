@@ -199,6 +199,20 @@ config DAHDI_DUMMY
 
 	  If unsure, say Y.
 
+config DAHDI_LOOP
+	tristate "Loopback (virtual E1/T1) Span Support"
+	depends on DAHDI
+	default DAHDI
+	---help---
+	  This module provides a virtual loopback E1/T1 span where data
+	  written to one side is received on the other, useful for testing
+	  without physical hardware.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called dahdi_loop.
+
+	  If unsure, say Y.
+
 config DAHDI_DYNAMIC
 	tristate "Dynamic (virtual) Span Support"
 	depends on DAHDI
